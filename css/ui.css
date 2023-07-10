@@ -24,6 +24,10 @@ body {
   background-position: 0 0, 15px 15px;
 }
 
+#videoplayer {
+  position: absolute;
+}
+
 #indicator {
   position: absolute;
   pointer-events: none;

@@ -21,7 +21,7 @@ function getNewCanvasJSON(newWidth) {
 }
 
 function resizeCanvas(newWidth) {
-  newWidth = newWidth || $('#canvas-contain').width();
+  newWidth = newWidth || $("#canvas-contain").width();
 
   if (canvas.width != newWidth) {
     canvas.loadFromJSON(getNewCanvasJSON(newWidth));
@@ -33,17 +33,10 @@ function resizeCanvas(newWidth) {
     canvas.calcOffset();
   }
 
-  if (on_air) {
-    $('#indicator').css({
-      width: canvas.getWidth() - 20,
-      height: canvas.getHeight() - 20,
-    });
-  } else {
-    $('#indicator').css({
-      width: canvas.getWidth(),
-      height: canvas.getHeight(),
-    });
-  }
+  $("#indicator").css({
+    width: canvas.getWidth(),
+    height: canvas.getHeight(),
+  });
 }
 
 function sendCanvas() {
@@ -52,16 +45,14 @@ function sendCanvas() {
 
 let on_air = false;
 function onAir() {
-  $('#indicator')
-    .addClass('on-air')
-    .css({
-      width: canvas.getWidth() - 20,
-      height: canvas.getHeight() - 20,
-    });
+  $("#indicator").addClass("on-air").css({
+    width: canvas.getWidth(),
+    height: canvas.getHeight(),
+  });
   on_air = true;
 }
 function offAir() {
-  $('#indicator').removeClass('on-air').css({
+  $("#indicator").removeClass("on-air").css({
     width: canvas.getWidth(),
     height: canvas.getHeight(),
   });
@@ -80,15 +71,15 @@ function evalMessage(msg) {
       offAir();
       break;
     case COMMAND_COLOR:
-      if ($('#drawing-color').val() !== data.color) {
+      if ($("#drawing-color").val() !== data.color) {
         color_updated = true;
-        $('#drawing-color').val(data.color).change();
+        $("#drawing-color").val(data.color).change();
       }
       break;
     case COMMAND_SIZE:
-      if ($('#drawing-line-width').val() !== data.size) {
+      if ($("#drawing-line-width").val() !== data.size) {
         size_updated = true;
-        $('#drawing-line-width').val(data.size).change();
+        $("#drawing-line-width").val(data.size).change();
       }
       break;
     default:
@@ -101,7 +92,7 @@ function evalMessage(msg) {
 
 let dissappear, countdown, timer;
 function handleConnect() {
-  $('#indicator').removeClass('error-state').html('');
+  $("#indicator").removeClass("error-state").html("");
 
   timer = CONFIG.FADE_TIMER / 1000;
   if (dissappear) {
@@ -110,18 +101,18 @@ function handleConnect() {
   }
 }
 function handleDisconnect() {
-  $('#indicator')
-    .addClass('error-state')
+  $("#indicator")
+    .addClass("error-state")
     .html(
-      '<h1>Connection Lost</h1>' +
+      "<h1>Connection Lost</h1>" +
         (on_air
-          ? '<h2>Render going down in ' + timer + ' seconds...</h2>'
-          : '<h2>Render is down.</h2>')
+          ? "<h2>Render going down in " + timer + " seconds...</h2>"
+          : "<h2>Render is down.</h2>")
     );
 
   dissappear = setTimeout(function () {
     console.log(
-      'STATUS: Connection not resumed. Render is now automatically down.'
+      "STATUS: Connection not resumed. Render is now automatically down."
     );
     dissappear = false;
     offAir();
@@ -129,12 +120,12 @@ function handleDisconnect() {
   if (on_air) {
     countdown = setInterval(function () {
       if (timer > 0) {
-        $('#indicator h2').html(
-          'Render going down in ' + --timer + ' seconds...'
+        $("#indicator h2").html(
+          "Render going down in " + --timer + " seconds..."
         );
       } else {
         clearInterval(countdown);
-        $('#indicator h2').html('Render is down.');
+        $("#indicator h2").html("Render is down.");
       }
     }, 1000);
   }
@@ -143,13 +134,13 @@ function handleDisconnect() {
 $(window).resize(function () {
   // handle ui canvas size changes
   resizeCanvas();
-  clearTimeout($.data(this, 'resizeTimer'));
+  clearTimeout($.data(this, "resizeTimer"));
   $.data(
     this,
-    'resizeTimer',
+    "resizeTimer",
     setTimeout(function () {
       size_updated = true;
-      $('#drawing-line-width').change();
+      $("#drawing-line-width").change();
     }, 200)
   );
 });
@@ -182,21 +173,21 @@ function bindSpacebar() {
 }
 
 $(document).ready(function () {
-  $('#drawing-color').change(function () {
+  $("#drawing-color").change(function () {
     if (!color_updated) {
       stringSend({ command: COMMAND_COLOR, color: this.value });
     }
     color_updated = false;
   });
-  $('#drawing-line-width').change(function () {
-    $('#line-info').html($('#drawing-line-width').val());
+  $("#drawing-line-width").change(function () {
+    $("#line-info").html($("#drawing-line-width").val());
     if (!size_updated) {
       stringSend({ command: COMMAND_SIZE, size: this.value });
     }
     size_updated = false;
   });
 
-  $('#indicator')
-    .addClass('error-state')
-    .html('<h1>No Connection</h1><h2>Trying to connect...</h2>');
+  $("#indicator")
+    .addClass("error-state")
+    .html("<h1>No Connection</h1><h2>Trying to connect...</h2>");
 });

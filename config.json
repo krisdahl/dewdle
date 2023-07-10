@@ -10,19 +10,9 @@
   "FADE_DURATION": 500,
   "FADE_TIMER": 5000,
 
-  "COLOR_SELECT": [
-    "#FFFF00",
-    "#FF0000",
-    "#0000FF",
-    "#000000"
-  ],
-  "SIZE_SELECT": [
-    1,
-    2,
-    3,
-    4
-  ],
+  "COLOR_SELECT": ["#FF0000", "#FFFF00", "#0000FF", "#000000"],
+  "SIZE_SELECT": [1, 2, 3, 4],
 
-  "FORCE_OP_MODE": null,
+  "FORCE_OP_MODE": true,
   "DEFAULT_CANVAS": {}
 }
