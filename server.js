@@ -70,7 +70,7 @@ function socketSend(page, data) {
 }
 
 wss.on('connection', function connection(ws, req) {
-  const page = req.url.substring(1); // see who connected
+  const page = req.url.split("/").pop(); // see who connected
   let place = -1;
 
   // Add current connection to the correct pool based on page type
@@ -86,7 +86,7 @@ wss.on('connection', function connection(ws, req) {
       break;
   }
 
-  console.log(page + ' ' + --place + ' connected');
+  console.log(page + " " + --place + " connected");
 
   // Keep websocket connection alive
   sendHeartbeats(ws, { heartbeatTimeout: 30000, heartbeatInterval: 10000 });
@@ -109,9 +109,9 @@ wss.on('connection', function connection(ws, req) {
     stringSend(ws, tempCanvas);
   }
 
-  ws.on('message', function incoming(rawData) {
+  ws.on("message", function incoming(rawData) {
     const data = JSON.parse(rawData);
-    let message = '';
+    let message = "";
 
     switch (data.command) {
       case COMMAND_DOWN: // going off air
@@ -127,18 +127,18 @@ wss.on('connection', function connection(ws, req) {
       default:
         // sending a canvas
         tempCanvas = data; // keep track of the canvas
-        message = 'received canvas update';
+        message = "received canvas update";
     }
 
-    message = message !== '' ? message : "received '" + rawData + "'";
-    console.log((message += ' from ' + page + ' ' + place));
+    message = message !== "" ? message : "received '" + rawData + "'";
+    console.log((message += " from " + page + " " + place));
 
     socketSend(PAGE_DRAW, data);
     socketSend(PAGE_CONTROL, data);
     socketSend(PAGE_RENDER, data);
   });
 
-  ws.on('close', function () {
+  ws.on("close", function () {
     switch (page) {
       case PAGE_DRAW:
         delete socketsDraw[place];
@@ -151,6 +151,6 @@ wss.on('connection', function connection(ws, req) {
         break;
     }
 
-    console.log(page + ' ' + place + ' disconnected');
+    console.log(page + " " + place + " disconnected");
   });
 });
