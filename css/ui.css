@@ -26,6 +26,7 @@ body {
 
 #videoplayer {
   position: absolute;
+  width:100%;
 }
 
 #indicator {

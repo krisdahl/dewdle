@@ -12,6 +12,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/fabric.min.js"></script>
     <script src="js/sockets.js"></script>
@@ -21,20 +22,9 @@
   </head>
   <body>
     <div id="main">
-      <iframe
-        id="videoplayer"
-        src="https://player.castr.com/live_b68076901f4911ee97e4df9ed0092eea/realtime"
-        width="100%"
-        style="aspect-ratio: 16/9; min-height: 340px"
-        frameborder="0"
-        scrolling="no"
-        allow="autoplay"
-        allowfullscreen
-        webkitallowfullscreen
-        mozallowfullscreen
-        oallowfullscreen
-        msallowfullscreen
-      ></iframe>
+
+		<video id="videoplayer" controls autoplay muted></video>
+
       <div id="canvas-contain">
         <div id="indicator"></div>
         <canvas id="c" class="lower-canvas"></canvas>
@@ -67,3 +57,13 @@
     </div>
   </body>
 </html>
+
+
+<script type="module">
+	import WHEPClient from './whep/WHEPClient.js';
+
+	const url = 'https://customer-wc3mwn2a71cwuddc.cloudflarestream.com/d9442d717a2cc13f087b37750421e5a1/webRTC/play';
+	const videoElement = document.getElementById('videoplayer');
+
+	self.client = new WHEPClient(url, videoElement);
+</script>
