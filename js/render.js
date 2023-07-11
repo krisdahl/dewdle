@@ -66,6 +66,12 @@ $(document).ready(function () {
     canvas.setWidth(CONFIG.CANVAS_WIDTH);
     canvas.setHeight(CONFIG.CANVAS_HEIGHT);
 
-    openSocket(CONFIG.BASE_URL + ':' + CONFIG.WEBSOCKET_PORT + '/render');
+
+    var url = CONFIG.BASE_URL;
+    if (CONFIG.WEBSOCKET_PORT_FRONTEND === undefined) CONFIG.WEBSOCKET_PORT_FRONTEND = CONFIG.WEBSOCKET_PORT; //default to WEBSOCKET_PORT_FRONTEND
+    if (CONFIG.WEBSOCKET_PORT_FRONTEND) url = url + ":" + CONFIG.WEBSOCKET_PORT_FRONTEND; //add port if we have it
+    url = url + "/render";
+    socket = openSocket(url);
+
   });
 });

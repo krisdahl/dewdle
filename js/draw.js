@@ -2,7 +2,11 @@ $(document).ready( function() {
 	$.getJSON('./config.json', function (json) {
 		CONFIG = json;
 
-		socket = openSocket(CONFIG.BASE_URL + ':' + CONFIG.WEBSOCKET_PORT + '/draw');
+		var url = CONFIG.BASE_URL;
+		if (CONFIG.WEBSOCKET_PORT_FRONTEND === undefined) CONFIG.WEBSOCKET_PORT_FRONTEND = CONFIG.WEBSOCKET_PORT; //default to WEBSOCKET_PORT_FRONTEND
+		if (CONFIG.WEBSOCKET_PORT_FRONTEND) url = url + ":" + CONFIG.WEBSOCKET_PORT_FRONTEND; //add port if we have it
+		url = url + "/draw";
+		socket = openSocket(url);
 
 //////// CANVAS CODE
 		$('#drawing-color').val(CONFIG.COLOR_SELECT[0]);	// set default brush color
