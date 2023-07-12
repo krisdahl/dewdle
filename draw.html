@@ -12,6 +12,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+	<script src="https://cdn.jsdelivr.net/npm/ovenplayer/dist/ovenplayer.js"></script>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/fabric.min.js"></script>
@@ -59,11 +60,15 @@
 </html>
 
 
-<script type="module">
-	import WHEPClient from './whep/WHEPClient.js';
+<script>
 
-	const url = 'https://customer-wc3mwn2a71cwuddc.cloudflarestream.com/d9442d717a2cc13f087b37750421e5a1/webRTC/play';
-	const videoElement = document.getElementById('videoplayer');
-
-	self.client = new WHEPClient(url, videoElement);
+	const player = OvenPlayer.create('videoplayer',  {
+		"autoStart": true,
+		"autoFallback": true,
+		"mute": true,
+		"sources": [{
+			"type": "webrtc",
+			"file": "ws://telestrator.weareatomic.com:3333/app/telestrator?transport=tcp"
+		}]
+	});
 </script>
