@@ -59,13 +59,13 @@ $(document).ready( function() {
 				canvas.freeDrawingBrush.color = this.value;
 			};
 			drawingLineWidthEl.onchange = function() {
-				canvas.freeDrawingBrush.width = (parseInt(drawingLineWidthEl.value, 10)/100)*$('c').width || 1;
+				canvas.freeDrawingBrush.width = (parseInt(drawingLineWidthEl.value, 10)/300)*$('c').width || 1;
 				this.previousSibling.innerHTML = this.value;
 			};
 
 			if (canvas.freeDrawingBrush) {
 				canvas.freeDrawingBrush.color = drawingColorEl.value;
-				canvas.freeDrawingBrush.width = (parseInt(drawingLineWidthEl.value, 10)/100)*$('c').width || 1;
+				canvas.freeDrawingBrush.width = (parseInt(drawingLineWidthEl.value, 10)/300)*$('c').width || 1;
 				canvas.freeDrawingBrush.shadowBlur = 0;
 			}
 
@@ -73,7 +73,7 @@ $(document).ready( function() {
 //////// EOF CANVAS CODE
 
 		$ = jQuery;
-		$('#canvas-contain').on('click', function() {
+		$("#canvas-contain").on("click touchend", function () {
 			sendCanvas();
 		});
 
