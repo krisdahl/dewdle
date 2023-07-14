@@ -77,6 +77,11 @@ $(document).ready( function() {
 			sendCanvas();
 		});
 
+		//for some reason touchend doesn't have the canvas to send right away, needs a delay
+		$("#canvas-contain").on("touchend", function () {
+			setTimeout(sendCanvas, 75);
+		});
+
 		$('#fullscreen').on('click', function() {
 			goFullscreen();
 		});
