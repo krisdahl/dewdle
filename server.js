@@ -145,15 +145,12 @@ wss.on('connection', function connection(ws, req) {
   if (size) {
     stringSend(ws, size);
   }
-  if (page === PAGE_DRAW || page === PAGE_CONTROL) {
-    stringSend(ws, tempCanvas);
-    if (status) {
-      stringSend(ws, status);
-    } else {
-      stringSend(ws, { command: COMMAND_DOWN });
-    }
-  } else if (status && status.command === COMMAND_DOWN) {
-    stringSend(ws, tempCanvas);
+
+  stringSend(ws, tempCanvas);
+  if (status) {
+    stringSend(ws, status);
+  } else {
+    stringSend(ws, { command: COMMAND_UP });
   }
 
   ws.on("message", function incoming(rawData) {
