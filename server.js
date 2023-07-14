@@ -68,6 +68,26 @@ app.get("/toggle", (req, res) => {
 
 });
 
+app.get(["/color", "/color/:color"], (req, res) => {
+  var data = color;
+  var reg = /([0-9a-f]{3}){1,2}$/i;
+  if (req.params.color) {
+    if (!reg.test(req.params.color)) return res.json({"error":"Invalid color code"});
+
+    data = {
+      command: "COLOR",
+      color: "#" + req.params.color,
+    };
+
+    color = data;
+
+    socketSendAll(data);
+  }
+
+  if (!color) color = {};
+  return res.json(color);
+});
+
 
 app.all('*', function (req, res) {
   res.redirect('/');
