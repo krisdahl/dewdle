@@ -29,6 +29,7 @@ $(document).ready(function() {
 
 		$('#clear-canvas').click(function() {
 			canvas.clear();
+			sendCanvas();
 		});
 
 		$('#save-png').click(function () {
