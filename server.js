@@ -30,6 +30,45 @@ app.use('/draw', express.static(__dirname + '/draw.html'));
 app.use('/control', express.static(__dirname + '/control.html'));
 app.use('/render', express.static(__dirname + '/render.html'));
 app.use('/', express.static(__dirname));
+
+
+// GET endpoints for streamdecks
+app.get('/clear', (req, res) => {
+  var data = JSON.stringify(tempCanvas)
+  socketSendAll(data);
+  return res.json('clear');
+});
+
+app.get("/on", (req, res) => {
+   var data = { command: COMMAND_UP }
+   status = data;
+   socketSendAll(data);
+   return res.json(status);
+});
+
+app.get("/off", (req, res) => {
+  var data = { command: COMMAND_DOWN };
+  status = data;
+  socketSendAll(data);
+  return res.json(status);
+});
+
+app.get("/toggle", (req, res) => {
+  if(!status) {
+    status = { command : COMMAND_UP };
+  } else if (status.command == COMMAND_DOWN) {
+    status.command = COMMAND_UP;
+  } else {
+    status.command = COMMAND_DOWN;
+  }
+
+  var data = status;
+  socketSendAll(data);
+  return res.json(status);
+
+});
+
+
 app.all('*', function (req, res) {
   res.redirect('/');
 });
@@ -42,6 +81,8 @@ const socketsControl = [];
 const socketsRender = [];
 let tempCanvas = CONFIG.DEFAULT_CANVAS;
 let status, color, size;
+
+status = { command : COMMAND_UP };
 
 // Sends the stringified message object over the given websocket
 function stringSend(socket, msg) {
@@ -67,6 +108,12 @@ function socketSend(page, data) {
   workingSockets.forEach(function (sock) {
     stringSend(sock, data);
   });
+}
+
+function socketSendAll(data) {
+    socketSend(PAGE_DRAW, data);
+    socketSend(PAGE_CONTROL, data);
+    socketSend(PAGE_RENDER, data);
 }
 
 wss.on('connection', function connection(ws, req) {
