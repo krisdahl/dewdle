@@ -73,7 +73,7 @@ $(document).ready( function() {
 //////// EOF CANVAS CODE
 
 		$ = jQuery;
-		$("#canvas-contain").on("click touchend", function () {
+		$("#canvas-contain").on("click", function () {
 			sendCanvas();
 		});
 
