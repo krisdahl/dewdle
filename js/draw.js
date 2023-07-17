@@ -73,13 +73,15 @@ $(document).ready( function() {
 //////// EOF CANVAS CODE
 
 		$ = jQuery;
-		$("#canvas-contain").on("click", function () {
+		$("#canvas-contain").on("click", function (e) {
 			sendCanvas();
+			e.preventDefault();
 		});
 
 		//for some reason touchend doesn't have the canvas to send right away, needs a delay
-		$("#canvas-contain").on("touchend", function () {
+		$("#canvas-contain").on("touchend", function (e) {
 			setTimeout(sendCanvas, 75);
+			e.preventDefault();
 		});
 
 		$('#fullscreen').on('click', function() {
