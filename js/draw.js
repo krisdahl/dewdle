@@ -74,13 +74,20 @@ $(document).ready( function() {
 
 		$ = jQuery;
 		$("#canvas-contain").on("click", function (e) {
+	
 			sendCanvas();
+			resizeCanvas();
 			e.preventDefault();
 		});
 
+		var timer;
+
 		//for some reason touchend doesn't have the canvas to send right away, needs a delay
 		$("#canvas-contain").on("touchend", function (e) {
-			setTimeout(sendCanvas, 75);
+			setTimeout(function() {
+				resizeCanvas();
+				sendCanvas();
+			},75);
 			e.preventDefault();
 		});
 
