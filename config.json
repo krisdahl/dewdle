@@ -1,5 +1,5 @@
 {
-  "BASE_URL": "ws://localhost",
+  "BASE_URL": "ws://10.9.11.203",
   "WEBSOCKET_PORT": 12181,
   "WEBSERVER_PORT": 12180,
   "RECONNECT_INTERVAL": 1000,

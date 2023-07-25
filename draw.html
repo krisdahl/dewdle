@@ -24,11 +24,9 @@
   <body>
     <div id="main">
 
-		<video id="videoplayer" controls autoplay muted></video>
-
       <div id="canvas-contain">
         <div id="indicator"></div>
-        <canvas id="c" class="lower-canvas"></canvas>
+        <canvas id="c" class="lower-canvas" width="1920" height="1080"></canvas>
       </div>
 
       <nav
@@ -59,16 +57,3 @@
   </body>
 </html>
 
-
-<script>
-
-	const player = OvenPlayer.create('videoplayer',  {
-		"autoStart": true,
-		"autoFallback": true,
-		"mute": true,
-		"sources": [{
-			"type": "webrtc",
-			"file": "wss://telestrator.weareatomic.com/app/telestrator?transport=tcp"
-		}]
-	}); 
-</script>

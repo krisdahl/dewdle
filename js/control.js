@@ -11,6 +11,8 @@ $(document).ready(function() {
 	$.getJSON('./config.json', function (json) {
 		CONFIG = json;
 
+		fabric.Object.prototype.objectCaching = false;
+		
 		$('#drawing-color').val(CONFIG.COLOR_SELECT[0]);	// set default brush color
 		$('#drawing-line-width').val(CONFIG.SIZE_SELECT[0]);	// set default brush size
 		$('#line-info').html($('#drawing-line-width').val());

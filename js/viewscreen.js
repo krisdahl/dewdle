@@ -3,6 +3,8 @@ let canvas;
 function getNewCanvasJSON(newWidth) {
   newWidth = newWidth || CONFIG.CANVAS_WIDTH;
 
+  fabric.Object.prototype.objectCaching = false;
+
   let canvas2 = new fabric.Canvas();
   canvas2.loadFromJSON(JSON.stringify(canvas)); // duplicate ui canvas
   if (canvas.width != newWidth) {
@@ -17,7 +19,11 @@ function getNewCanvasJSON(newWidth) {
     canvas2.setWidth(canvas.getWidth() * scale);
     canvas2.setHeight(canvas.getHeight() * scale);
   }
-  return JSON.stringify(canvas2);
+
+  var jsoncanvas = JSON.stringify(canvas2);
+  canvas2.dispose();
+
+  return jsoncanvas;
 }
 
 function resizeCanvas(newWidth) {
